@@ -1,27 +1,26 @@
-#!/bin/sh
+language: android
+android:
+  components:
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    - tools
+    - platform-tools
 
-#DEBUG MODE
-set -x
+    # The BuildTools version used by your project
+    - build-tools-28.0.2
 
-#VARIABLES
-apk_name=sample
-apk_extension=.apk
-apk_folder=build/apk/
+    # The SDK version used to compile your project
+    - android-28
 
-###LET'S SCRIPT###
+    # Additional components
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
 
-#GET FINAL APK_PATH
-date=$(date '+%d%m%Y%H%M%S');
-apk_final_path=$apk_folder$apk_name-$date$apk_extension
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+    - sys-img-x86-android-26
+    - sys-img-armeabi-v7a-android-17
 
-#BUILD APK
-chmod +x gradlew
-./gradlew clean
-./gradlew assembleDebug
-
-#FIND APK
-apk_origin_path=`find . -type f -name "*.apk" | head -n 1`
-
-#COPY FILE TO RIGHT FOLDER
-mkdir -p $apk_folder
-cp $apk_origin_path $apk_final_path
+  script:
+    - ./build-apk.sh
