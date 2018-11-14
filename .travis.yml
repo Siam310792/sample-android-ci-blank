@@ -18,6 +18,4 @@ android:
     - extra-android-m2repository
 
 script:
-    - ./gradlew clean
-    - ./gradlew test
-    - ./gradlew assembleDebug
+    - ./build-apk.sh
